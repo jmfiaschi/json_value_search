@@ -13,7 +13,7 @@ pub trait Search {
 }
 
 impl Search for serde_json::Value {
-    /// # Examples:
+    /// # Examples: Find elements in an object.
     /// ```
     /// use json_value_search::Search;
     /// use serde_json::Value;
@@ -32,6 +32,45 @@ impl Search for serde_json::Value {
     /// let value_expected_with_regex: Value = serde_json::from_str(r#"["value_B","value_C"]"#).unwrap();
     /// assert_eq!(Some(value_expected_with_regex),value.clone().search(r#"/field_A/*/field.+"#).unwrap());
     /// ```
+    /// # Examples: Find the same elements in an object or array return the same value.
+    /// ```
+    /// use json_value_search::Search;
+    /// use serde_json::Value;
+    ///
+    /// let value1: Value = serde_json::from_str(r#"[{"array1":[{"field1":"value1"},{"field2":"value2"}]}]"#).unwrap();
+    /// let value2: Value = serde_json::from_str(r#"{"array2":[{"field1":"value1"},{"field2":"value2"}]}"#).unwrap();
+    ///
+    /// let result1 = value1.search(r#"/*/array*/*"#).unwrap();
+    /// let result2 = value2.search(r#"/array*/*"#).unwrap();
+    /// assert_eq!(result1, result2);
+    /// ```
+    /// # Examples: Not found an element return None.
+    /// ```
+    /// use json_value_search::Search;
+    /// use serde_json::Value;
+    ///
+    /// let value: Value = serde_json::from_str(r#"{"field_A":[{"field.B":"value_B"},{"field_C":"value_C"}]}"#).unwrap();
+    ///
+    /// let result = value.clone().search(r#"/not_found/*"#);
+    /// match result {
+    ///     Ok(None) => (),
+    ///     Ok(Some(_)) => panic!("Should return None"),
+    ///     Err(e) => panic!(format!("Should not be in error, {}", e))
+    /// };
+    /// ```
+    /// # Examples: Write a bad regex return an error.
+    /// ```
+    /// use json_value_search::Search;
+    /// use serde_json::Value;
+    ///
+    /// let value: Value = serde_json::from_str(r#"{"field_A":[{"field.B":"value_B"},{"field_C":"value_C"}]}"#).unwrap();
+    ///
+    /// let result = value.clone().search(r#"/["#);
+    /// match result {
+    ///     Ok(_) => panic!("Should return an error"),
+    ///     Err(e) => ()
+    /// };
+    /// ```
     fn search(self, path: &str) -> io::Result<Option<Value>> {
         let fields: Vec<&str> = path.split("/").skip(1).collect();
 
@@ -40,7 +79,7 @@ impl Search for serde_json::Value {
             _ => Ok(None),
         }
     }
-    /// # Examples:
+    /// # Examples: Find elements in an object.
     /// ```
     /// use json_value_search::Search;
     /// use serde_json::Value;
@@ -58,6 +97,45 @@ impl Search for serde_json::Value {
     ///
     /// let value_expected_with_regex: Value = serde_json::from_str(r#"["value_B","value_C"]"#).unwrap();
     /// assert_eq!(Some(value_expected_with_regex),value.clone().search_by_fields(vec!["field_A","*","field.+"]).unwrap());
+    /// ```
+    /// # Examples: Find the same elements in an object or array return the same value.
+    /// ```
+    /// use json_value_search::Search;
+    /// use serde_json::Value;
+    ///
+    /// let value1: Value = serde_json::from_str(r#"[{"array1":[{"field1":"value1"},{"field2":"value2"}]}]"#).unwrap();
+    /// let value2: Value = serde_json::from_str(r#"{"array2":[{"field1":"value1"},{"field2":"value2"}]}"#).unwrap();
+    ///
+    /// let result1 = value1.search_by_fields(vec!["*","array*","*"]).unwrap();
+    /// let result2 = value2.search_by_fields(vec!["array*","*"]).unwrap();
+    /// assert_eq!(result1, result2);
+    /// ```
+    /// # Examples: Not found an element return None.
+    /// ```
+    /// use json_value_search::Search;
+    /// use serde_json::Value;
+    ///
+    /// let value: Value = serde_json::from_str(r#"{"field_A":[{"field.B":"value_B"},{"field_C":"value_C"}]}"#).unwrap();
+    ///
+    /// let result = value.clone().search_by_fields(vec!["not_found"]);
+    /// match result {
+    ///     Ok(None) => (),
+    ///     Ok(Some(_)) => panic!("Should return None"),
+    ///     Err(e) => panic!(format!("Should not be in error, {}", e))
+    /// };
+    /// ```
+    /// # Examples: Write a bad regex return an error.
+    /// ```
+    /// use json_value_search::Search;
+    /// use serde_json::Value;
+    ///
+    /// let value: Value = serde_json::from_str(r#"{"field_A":[{"field.B":"value_B"},{"field_C":"value_C"}]}"#).unwrap();
+    ///
+    /// let result = value.clone().search_by_fields(vec!["["]);
+    /// match result {
+    ///     Ok(_) => panic!("Should return an error"),
+    ///     Err(e) => ()
+    /// };
     /// ```
     fn search_by_fields(&self, fields: Vec<&str>) -> io::Result<Option<Value>> {
         if fields.is_empty() {
@@ -109,9 +187,14 @@ fn search_by_str(
             for value_tmp in vec {
                 let searched_value_option =
                     search_by_str(value_tmp, current_field, fields.clone())?;
-                if let Some(searched_value) = searched_value_option {
-                    searched_array.push(searched_value);
-                }
+
+                match searched_value_option {
+                    Some(Value::Array(searched_value)) => {
+                        searched_array.append(&mut searched_value.clone())
+                    }
+                    Some(searched_value) => searched_array.push(searched_value),
+                    None => (),
+                };
             }
             Ok(match searched_array.is_empty() {
                 true => None,
