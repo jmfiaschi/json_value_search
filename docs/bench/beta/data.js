@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639776911311,
+  "lastUpdate": 1639777683238,
   "repoUrl": "https://github.com/jmfiaschi/json_value_search",
   "entries": {
     "Benchmark": [
@@ -107,6 +107,60 @@ window.BENCHMARK_DATA = {
             "name": "search//field/*/regex",
             "value": 76934,
             "range": "± 647",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jm.fiaschi@gmail.com",
+            "name": "jm.fiaschi",
+            "username": "jmfiaschi"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4693e9c2c386be9ee70204a39b545af0db9d3509",
+          "message": "Merge branch 'main' into beta",
+          "timestamp": "2021-12-17T22:44:32+01:00",
+          "tree_id": "8db1e28d4ddda81bfa2bbd00b0d5464c69afcac4",
+          "url": "https://github.com/jmfiaschi/json_value_search/commit/4693e9c2c386be9ee70204a39b545af0db9d3509"
+        },
+        "date": 1639777682748,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "search//field/other_field",
+            "value": 30584,
+            "range": "± 2861",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/*/other_field).",
+            "value": 58937,
+            "range": "± 3191",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/1/other_field).",
+            "value": 30739,
+            "range": "± 1048",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/1",
+            "value": 18196,
+            "range": "± 1023",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/*/regex",
+            "value": 97101,
+            "range": "± 3066",
             "unit": "ns/iter"
           }
         ]
