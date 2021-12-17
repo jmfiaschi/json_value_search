@@ -1,6 +1,8 @@
 # json_value_search
 
-[![Actions Status](https://github.com/jmfiaschi/json_value_search/workflows/CI/badge.svg)](https://github.com/jmfiaschi/json_value_search/actions)
+[![Linter](https://github.com/jmfiaschi/json_value_search/workflows/Lint/badge.svg)](https://github.com/jmfiaschi/json_value_search/actions/workflows/lint.yml)
+[![Actions Status](https://github.com/jmfiaschi/json_value_search/workflows/CI/badge.svg)](https://github.com/jmfiaschi/json_value_search/actions/workflows/ci.yml)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 Give an interface to search values into json_serde::Value.
 
@@ -8,7 +10,7 @@ Give an interface to search values into json_serde::Value.
 
  ```Toml
 [dependencies]
-json_value_search = "0.1"
+json_value_search = "1.0"
 ```
 
 ## Usage
@@ -34,44 +36,10 @@ let value_expected_with_regex: Value = serde_json::from_str(r#"["value_B","value
 assert_eq!(Some(value_expected_with_regex),value.clone().search(r#"/field_A/*/field.+"#));
 ```
 
-## Bench
+## Useful link
 
-```
-Bench json_value.search(/field/other_field).                                                                             
-                        time:   [33.771 us 33.857 us 33.950 us]
-                        change: [-13.330% -10.288% -7.2919%] (p = 0.00 < 0.05)
-Found 9 outliers among 100 measurements (9.00%)
-  5 (5.00%) high mild
-  4 (4.00%) high severe
-
-Bench json_value.search(/field/*/other_field).                                                                            
-                        time:   [81.117 us 84.117 us 87.467 us]
-                        change: [+3.4453% +6.8087% +10.315%] (p = 0.00 < 0.05)
-Found 10 outliers among 100 measurements (10.00%)
-  9 (9.00%) high mild
-  1 (1.00%) high severe
-
-Bench json_value.search(/field/1/other_field).                                                                             
-                        time:   [45.043 us 46.249 us 47.626 us]
-                        change: [-3.0050% +1.0537% +4.8742%] (p = 0.61 > 0.05)
-Found 7 outliers among 100 measurements (7.00%)
-  2 (2.00%) high mild
-  5 (5.00%) high severe
-
-Bench json_value.search(/field/1).                                                                             
-                        time:   [23.609 us 23.916 us 24.354 us]
-                        change: [-1.9539% -0.8737% +0.3058%] (p = 0.13 > 0.05)
-Found 6 outliers among 100 measurements (6.00%)
-  5 (5.00%) high mild
-  1 (1.00%) high severe
-
-Bench json_value.search(/field/*/regex).                                                                            
-                        time:   [127.65 us 130.88 us 134.64 us]
-                        change: [+6.0142% +8.2959% +10.611%] (p = 0.00 < 0.05)
-Found 14 outliers among 100 measurements (14.00%)
-  10 (10.00%) high mild
-  4 (4.00%) high severe
-```
+* [Benchmark report](https://jmfiaschi.github.io/json_value_search/bench/main/)
+* [Package](https://crates.io/crates/json_value_search)
 
 ## Contributing
 

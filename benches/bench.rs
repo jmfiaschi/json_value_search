@@ -49,24 +49,26 @@ static BENCH_DATA: &'static str = r#"{
 }"#;
 
 fn search(c: &mut Criterion) {
+    let mut group = c.benchmark_group("search");
+
     let value: Value = serde_json::from_str(BENCH_DATA).unwrap();
-    c.bench_function("Bench json_value.search(/field/other_field).", |b| {
+    group.bench_function("/field/other_field", |b| {
         b.iter(|| black_box(value.clone().search("/position/x")))
     });
     let value: Value = serde_json::from_str(BENCH_DATA).unwrap();
-    c.bench_function("Bench json_value.search(/field/*/other_field).", |b| {
+    group.bench_function("/field/*/other_field).", |b| {
         b.iter(|| black_box(value.clone().search("/members/*/name")))
     });
     let value: Value = serde_json::from_str(BENCH_DATA).unwrap();
-    c.bench_function("Bench json_value.search(/field/1/other_field).", |b| {
+    group.bench_function("/field/1/other_field).", |b| {
         b.iter(|| black_box(value.clone().search("/members/1/name")))
     });
     let value: Value = serde_json::from_str(BENCH_DATA).unwrap();
-    c.bench_function("Bench json_value.search(/field/1).", |b| {
+    group.bench_function("/field/1", |b| {
         b.iter(|| black_box(value.clone().search("/members/1")))
     });
     let value: Value = serde_json::from_str(BENCH_DATA).unwrap();
-    c.bench_function("Bench json_value.search(/field/*/regex).", |b| {
+    group.bench_function("/field/*/regex", |b| {
         b.iter(|| black_box(value.clone().search("/members/*/secret.+")))
     });
 }
