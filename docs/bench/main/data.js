@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639778238099,
+  "lastUpdate": 1639909638060,
   "repoUrl": "https://github.com/jmfiaschi/json_value_search",
   "entries": {
     "Benchmark": [
@@ -107,6 +107,60 @@ window.BENCHMARK_DATA = {
             "name": "search//field/*/regex",
             "value": 95857,
             "range": "± 3962",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jm.fiaschi@gmail.com",
+            "name": "jmfiaschi",
+            "username": "jmfiaschi"
+          },
+          "committer": {
+            "email": "jm.fiaschi@gmail.com",
+            "name": "jmfiaschi",
+            "username": "jmfiaschi"
+          },
+          "distinct": true,
+          "id": "0bf4c4fca0dd2571aa06bbf152b7190b665219c9",
+          "message": "chore(release-git): add changelog",
+          "timestamp": "2021-12-19T11:23:48+01:00",
+          "tree_id": "2d390c04031140d21f3dc624460db8b168be8cad",
+          "url": "https://github.com/jmfiaschi/json_value_search/commit/0bf4c4fca0dd2571aa06bbf152b7190b665219c9"
+        },
+        "date": 1639909637496,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "search//field/other_field",
+            "value": 28248,
+            "range": "± 687",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/*/other_field).",
+            "value": 56756,
+            "range": "± 1129",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/1/other_field).",
+            "value": 30671,
+            "range": "± 475",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/1",
+            "value": 18411,
+            "range": "± 399",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/*/regex",
+            "value": 89880,
+            "range": "± 1525",
             "unit": "ns/iter"
           }
         ]
