@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1736634269055,
+  "lastUpdate": 1736635498514,
   "repoUrl": "https://github.com/jmfiaschi/json_value_search",
   "entries": {
     "Benchmark": [
@@ -377,6 +377,60 @@ window.BENCHMARK_DATA = {
             "name": "search//field/*/regex",
             "value": 15410,
             "range": "± 103",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jm.fiaschi@gmail.com",
+            "name": "Jean-Marc FIASCHI",
+            "username": "jmfiaschi"
+          },
+          "committer": {
+            "email": "jm.fiaschi@gmail.com",
+            "name": "Jean-Marc FIASCHI",
+            "username": "jmfiaschi"
+          },
+          "distinct": true,
+          "id": "dc4acf27fe40d03015294839f377c1d641769744",
+          "message": "feat(makefile): add",
+          "timestamp": "2025-01-11T23:42:30+01:00",
+          "tree_id": "246709734a9dce7fb2bc8028548b8d4c7ebf2ee8",
+          "url": "https://github.com/jmfiaschi/json_value_search/commit/dc4acf27fe40d03015294839f377c1d641769744"
+        },
+        "date": 1736635498072,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "search//field/other_field",
+            "value": 1669,
+            "range": "± 84",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/*/other_field).",
+            "value": 2217,
+            "range": "± 14",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/1/other_field).",
+            "value": 1749,
+            "range": "± 13",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/1",
+            "value": 1796,
+            "range": "± 12",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "search//field/*/regex",
+            "value": 15719,
+            "range": "± 109",
             "unit": "ns/iter"
           }
         ]
